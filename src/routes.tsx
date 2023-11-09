@@ -4,11 +4,12 @@ import { NotFound } from "./components/NotFound";
 import { RouteObject } from "react-router-dom";
 import { Detail } from "./components/Detail";
 import { Counter } from "./pages/Counter";
+import { PlatformLayout } from "./pages/Layout";
 
 export const routes: RouteObject[] = [
   { 
     path: "/", 
-    element: <Home />
+    element: <PlatformLayout />
   },
   { 
     path: "/about", 

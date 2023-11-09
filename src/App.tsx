@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 import { routes } from "./routes";
 
-import "./App.css";
 
 const CustomRoutes = () => {
   return useRoutes(routes)
