@@ -3,6 +3,7 @@ import { About } from "./components/About";
 import { NotFound } from "./components/NotFound";
 import { RouteObject } from "react-router-dom";
 import { Detail } from "./components/Detail";
+import { Counter } from "./pages/Counter";
 
 export const routes: RouteObject[] = [
   { 
@@ -18,6 +19,10 @@ export const routes: RouteObject[] = [
         element: <Detail />
       }
     ] 
+  },
+  {
+    path: '/counter',
+    element: <Counter />
   },
   { 
     path: "*", 
