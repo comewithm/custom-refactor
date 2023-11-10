@@ -1,18 +1,13 @@
 import {
   BrowserRouter,
-  useRoutes,
 } from "react-router-dom";
-import { routes } from "./routes";
 
-
-const CustomRoutes = () => {
-  return useRoutes(routes)
-}
+import Router from './routers/index'
 
 function App() {
   return (
     <BrowserRouter>
-      <CustomRoutes />
+      <Router /> 
     </BrowserRouter>
   );
 }
