@@ -1,6 +1,6 @@
-import { decrement, increment, incrementByAmount } from "../../features/counter/counterSlice"
-import {getMovieData} from '../../features/movie/movieSlice'
-import { useAppDispatch, useAppSelector } from "../../hooks"
+import { decrement, increment, incrementByAmount } from "@/redux/modules/counterSlice"
+import {getMovieData} from '@/redux/modules/movieSlice'
+import { useAppDispatch, useAppSelector } from "@/redux/store"
 
 import {Button} from 'antd'
 
