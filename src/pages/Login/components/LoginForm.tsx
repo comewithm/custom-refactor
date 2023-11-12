@@ -1,9 +1,12 @@
-import { useAppDispatch } from "@/hooks"
+import { useAppDispatch } from "@/redux/store"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
-import { Button, Form, Input } from "antd"
+import { Button, Form, Input, message } from "antd"
 import { useState } from "react"
-
-import {Login} from '@/interface/login'
+import {md5} from 'js-md5'
+import {Login} from '@/api/interface'
+import { loginApi } from "@/api/modules/login"
+import { setToken } from "@/redux/modules/global"
+import { useNavigate } from "react-router-dom"
 
 const {Item} = Form
 
@@ -13,9 +16,22 @@ const LoginForm = () => {
     const [loading, setLoading] = useState(false)
 
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
-    const onFinish = (loginForm:Login.ReqParams) => {
-        // TODO: 
+    const onFinish = async (loginForm:Login.ReqParams) => {
+        try {
+            setLoading(true)
+            loginForm.userPwd = md5(loginForm.userPwd)
+
+            // const {success, data} = await loginApi(loginForm)
+            // // 存储token
+            // dispatch(setToken(data!))
+            message.success('登录成功')
+            // 跳转
+            navigate('/home/index')
+        } finally {
+            setLoading(false)
+        }
     }
 
     const onFinishFailed = (error:any) => {

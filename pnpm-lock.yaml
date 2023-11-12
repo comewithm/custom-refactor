@@ -20,6 +20,9 @@ dependencies:
   axios:
     specifier: ^1.6.1
     version: registry.npmmirror.com/axios@1.6.1
+  js-md5:
+    specifier: ^0.8.3
+    version: registry.npmmirror.com/js-md5@0.8.3
   qs:
     specifier: ^6.11.2
     version: registry.npmmirror.com/qs@6.11.2
@@ -2865,6 +2868,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  registry.npmmirror.com/js-md5@0.8.3:
+    resolution: {integrity: sha512-qR0HB5uP6wCuRMrWPTrkMaev7MJZwJuuw4fnwAzRgP4J4/F8RwtodOKpGp4XpqsLBFzzgqIO42efFAyz2Et6KQ==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/js-md5/-/js-md5-0.8.3.tgz}
+    name: js-md5
+    version: 0.8.3
+    dev: false
 
   registry.npmmirror.com/make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/make-dir/-/make-dir-2.1.0.tgz}

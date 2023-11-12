@@ -2,6 +2,14 @@ import { Login } from "@/pages/Login";
 import { Navigate, useRoutes } from "react-router-dom";
 import { TRouteObject } from "./interface";
 
+// 导入所有路由
+const metaRouters = import.meta.glob('./modules/*.tsx', {eager: true})
+
+const routerList:TRouteObject[] = []
+
+Object.values(metaRouters).forEach((item:any) => {
+    routerList.push(...item.default)
+})
 
 export const rootRouter:TRouteObject[] = [
     {
@@ -17,6 +25,8 @@ export const rootRouter:TRouteObject[] = [
             key: 'login'
         }
     },
+    // 添加所有路由
+    ...routerList,
     {
         path: '*',
         element: <Navigate to={"/404"} />
