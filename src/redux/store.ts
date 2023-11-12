@@ -4,12 +4,14 @@ import {useDispatch, useSelector, TypedUseSelectorHook} from 'react-redux'
 import counterReducer from './modules/counterSlice'
 import movieSlice from './modules/movieSlice'
 import globalSlice from './modules/global'
+import menuSlice from './modules/menu'
 
 const store = configureStore({
     reducer: {
         counter: counterReducer,
         movie: movieSlice,
-        global: globalSlice
+        global: globalSlice,
+        menu: menuSlice
     }
 })
 

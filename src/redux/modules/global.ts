@@ -1,10 +1,7 @@
 import { Login } from "@/api/interface";
 import { createSlice } from "@reduxjs/toolkit";
 import type {PayloadAction} from '@reduxjs/toolkit'
-interface GlobalState {
-    tokenInfo: Login.LoginRes['tokenEntity']
-    userInfo: {[key in string]?: any;} 
-}
+import { GlobalState } from "../interface";
 
 const globalState: GlobalState = {
     tokenInfo: {
