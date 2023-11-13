@@ -1,11 +1,10 @@
-
 export enum ResultEnum {
     SUCCESS = 0,
     LOGIN_FAILED = 10001
 }
 
 
-const menuList:Menu.MenuOptions[] = [
+export const menuList:Menu.MenuOptions[] = [
     {
         path: '/tenant',
         title: '租户管理',
@@ -25,9 +24,3 @@ const menuList:Menu.MenuOptions[] = [
         title: '终端管理',
     },
 ]
-
-export const getMenuList = ():Promise<Menu.MenuOptions[]> => {
-    return new Promise((resolve, reject) => {
-        resolve(menuList)
-    })
-}

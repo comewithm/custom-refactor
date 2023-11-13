@@ -24,7 +24,7 @@ const LoginForm = () => {
             loginForm.userPwd = md5(loginForm.userPwd)
 
             // const {success, data} = await loginApi(loginForm)
-            // // 存储token
+            // 存储token
             // dispatch(setToken(data!))
             message.success('登录成功')
             // 跳转

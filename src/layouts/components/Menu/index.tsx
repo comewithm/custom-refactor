@@ -1,4 +1,4 @@
-import { getMenuList } from "@/constants"
+import { flattenMenuList, getMenuList }  from "@/utils/menu"
 import { MenuItem } from "@/layouts/interface"
 import { RootState, useAppDispatch, useAppSelector } from "@/redux/store"
 import { Menu, Spin } from "antd"
@@ -26,6 +26,7 @@ export const LayoutMenu = () => {
         setLoading(true)
         try {
             const list = await getMenuList()
+            setMenuList(flattenMenuList(list))
             // TODO:面包屑导航栏存储
             // TODO:存储路由菜单，做菜单权限判断
             dispatch(setReduxMenuList(list))

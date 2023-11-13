@@ -30,7 +30,7 @@ class RequestHttp {
                 axiosCanceler.addPending(config)
                 // 登录接口不需要添加token响应头
                 // TODO: 请求时是否设置loading
-                // TODO: token失效时，需要重新refreshToken接口获取新的token并重新执行相关的操作
+                // TODO: 抽离一个函数处理token问题 token失效时，需要重新refreshToken接口获取新的token并重新执行相关的操作
                 const token = store.getState().global.tokenInfo.authorizationToken
 
                 return {

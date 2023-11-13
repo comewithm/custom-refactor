@@ -1,10 +1,9 @@
-import { Home } from "./components/Home";
 import { About } from "./components/About";
 import { NotFound } from "./components/NotFound";
 import { RouteObject } from "react-router-dom";
 import { Detail } from "./components/Detail";
 import { Counter } from "./pages/Counter";
-import { PlatformLayout } from "./pages/Layout";
+import { PlatformLayout } from "./layouts/index";
 
 export const routes: RouteObject[] = [
   { 

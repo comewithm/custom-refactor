@@ -5,7 +5,6 @@ export const Login = () => {
 
     return (
         <div className='login-container'>
-            <div className="docs"></div>
             <LoginForm />
         </div>
     )
