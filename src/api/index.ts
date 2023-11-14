@@ -5,6 +5,7 @@ import { AxiosCanceler } from './helper/axiosCancel'
 import store from '@/redux/store'
 import { ResultEnum } from '@/constants'
 import { ApiResponse } from './interface'
+import { authorizeToken } from './helper/authorizeToken'
 
 const axiosCanceler = new AxiosCanceler()
 
@@ -13,7 +14,7 @@ const config = {
     timeout: 10 * 1000,
     withCredentials: true
 }
-
+// TODO 添加接口轮询次数限制
 class RequestHttp {
     service: AxiosInstance
     
@@ -30,16 +31,10 @@ class RequestHttp {
                 axiosCanceler.addPending(config)
                 // 登录接口不需要添加token响应头
                 // TODO: 请求时是否设置loading
-                // TODO: 抽离一个函数处理token问题 token失效时，需要重新refreshToken接口获取新的token并重新执行相关的操作
-                const token = store.getState().global.tokenInfo.authorizationToken
-
-                return {
-                    ...config,
-                    headers: {
-                        ...config.headers,
-                        "x-access-token": token
-                    }
-                }
+                // 抽离一个函数处理token问题 token失效时，
+                // 需要重新refreshToken接口获取新的token并重新执行相关的操作
+                config = authorizeToken(config)
+                return config
             },
             (error: AxiosError) => {
                 return Promise.reject(error)
@@ -65,7 +60,11 @@ class RequestHttp {
                     message.error(data.msg)
                     return Promise.reject(data)
                 }
-                // 成功请求
+                // 成功请求数据
+                // 登录或者刷新token时，缓存token到本地
+                // 登录已在loginForm中存储token
+                // 刷新token在请求时存储(getTokenByRefreshToken)
+
                 return data
             },
             async (error: AxiosError) => {
@@ -76,7 +75,8 @@ class RequestHttp {
                 }
                 // 根据响应的错误状态码做不同的处理
                 if(response) {
-                    checkStatus(response.status)
+                    // TODO: 错误类型判断
+                    // checkStatus(response.status)
                 }
                 
                 return Promise.reject(error)

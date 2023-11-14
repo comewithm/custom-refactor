@@ -18,15 +18,21 @@ const globalSlice = createSlice({
     name: 'global',
     initialState: globalState,
     reducers: {
-        setToken(state:GlobalState, {payload}: PayloadAction<Login.LoginRes>) {
-            const {currentLoginUser, tokenEntity} = payload
-            // TODO:token本地存储，过期需要重新请求refreshToken接口
-            state.tokenInfo = tokenEntity
-            state.userInfo = currentLoginUser
+        setToken(state:GlobalState, {payload}: PayloadAction<Login.LoginRes['tokenEntity']>) {
+            state.tokenInfo = {
+                ...state.tokenInfo,
+                ...payload
+            }
+        },
+        setUserInfo(state:GlobalState, {payload}: PayloadAction<Login.LoginRes['currentLoginUser']>) {
+            state.userInfo = {
+                ...state.userInfo,
+                ...payload
+            }
         },
     }
 })
 
-export const {setToken}  = globalSlice.actions
+export const {setToken, setUserInfo}  = globalSlice.actions
 
 export default globalSlice.reducer

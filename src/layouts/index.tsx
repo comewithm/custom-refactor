@@ -14,6 +14,7 @@ export const PlatformLayout = () => {
       </Sider>
       <Layout>
         {/* header */}
+        {/* <LayoutHeader /> */}
         {/* layout tabs */}
         {/* layout content */}
         <Content>

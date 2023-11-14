@@ -3,6 +3,10 @@ export enum ResultEnum {
     LOGIN_FAILED = 10001
 }
 
+export enum LOCAL_STORE_KEY {
+    "TOKEN_INFO" = "AUTH_TOKEN_INFO",
+}
+
 
 export const menuList:Menu.MenuOptions[] = [
     {

@@ -17,10 +17,10 @@ export namespace Login {
       [key in string]: any;
     };
     tokenEntity: {
-      tokenId: string;
+      tokenId?: string;
       authorizationToken: string;
       refreshToken: string;
-      refreshExpiresIn: number;
+      refreshExpiresIn?: number;
       expiresIn: number;
     };
   }
