@@ -6,21 +6,21 @@ export enum ResultEnum {
 
 export const menuList:Menu.MenuOptions[] = [
     {
-        path: '/tenant',
-        title: '租户管理',
+        path: '/login',
+        title: '管理A',
     },
     {
-        path: '/product',
-        title: '产品管理',
+        path: '/home',
+        title: '管理B',
         children: [
             {
-                path: '/product/robot',
-                title: '复刻人'
+                path: '/home/index',
+                title: '管理B-1'
             }
         ]
     },
     {
-        path: '/terminal',
-        title: '终端管理',
+        path: '/detail',
+        title: '管理C',
     },
 ]
