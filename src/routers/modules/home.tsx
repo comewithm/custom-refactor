@@ -12,7 +12,7 @@ const homeRouter: TRouteObject[] = [
                 element: <Home />,
                 meta: {
                     requiresAuth: true,
-                    title: "首页",
+                    title: "home",
                     key: 'home'
                 }
             }

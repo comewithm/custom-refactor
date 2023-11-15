@@ -13,3 +13,7 @@ declare namespace Menu {
 declare interface ViteEnv {
     VITE_API_URL: string
 }
+
+declare interface MenuInfo {
+    key: string
+}

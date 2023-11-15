@@ -73,7 +73,7 @@ export const LayoutMenu = () => {
         <div className="menu">
             <Spin spinning={loading} tip={'Loading...'}>
                 <Menu
-                    theme={'dark'}
+                    theme={'light'}
                     mode={'inline'}
                     triggerSubMenuAction={'click'}
                     openKeys={openKeys}

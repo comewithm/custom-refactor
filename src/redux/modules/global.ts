@@ -1,7 +1,7 @@
 import { Login } from "@/api/interface";
 import { createSlice } from "@reduxjs/toolkit";
 import type {PayloadAction} from '@reduxjs/toolkit'
-import { GlobalState } from "../interface";
+import { GlobalAssemblySize, GlobalState, ThemeConfigProps } from "../interface";
 
 const globalState: GlobalState = {
     tokenInfo: {
@@ -11,7 +11,14 @@ const globalState: GlobalState = {
         refreshExpiresIn: -1,
         expiresIn: -1
     },
-    userInfo: {}
+    userInfo: {},
+    assemblySize: 'middle',
+    language: 'zh',
+    themeConfig: {
+        primary: '#1890ff',
+        isDark: false,
+        weakOrGray: 'default'
+    }
 }
 
 const globalSlice = createSlice({
@@ -30,9 +37,21 @@ const globalSlice = createSlice({
                 ...payload
             }
         },
+        setAssemblySize(state:GlobalState, {payload}: PayloadAction<GlobalAssemblySize>) {
+            state.assemblySize = payload
+        },
+        setLanguage(state:GlobalState, {payload}: PayloadAction<string>) {
+            state.language = payload
+        },
+        setThemeConfig(state: GlobalState, {payload}: PayloadAction<Partial<ThemeConfigProps>>) {
+            state.themeConfig = {
+                ...state.themeConfig,
+                ...payload
+            }
+        }
     }
 })
 
-export const {setToken, setUserInfo}  = globalSlice.actions
+export const {setToken, setUserInfo, setAssemblySize, setLanguage, setThemeConfig}  = globalSlice.actions
 
 export default globalSlice.reducer

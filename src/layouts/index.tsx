@@ -1,6 +1,7 @@
 import {Layout} from 'antd'
 import { Outlet } from 'react-router-dom'
 import { LayoutMenu } from './components/Menu'
+import { LayoutHeader } from './components/Header'
 
 const {Sider, Content} = Layout
 
@@ -14,7 +15,7 @@ export const PlatformLayout = () => {
       </Sider>
       <Layout>
         {/* header */}
-        {/* <LayoutHeader /> */}
+        <LayoutHeader />
         {/* layout tabs */}
         {/* layout content */}
         <Content>
