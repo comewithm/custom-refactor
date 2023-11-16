@@ -1,0 +1,10 @@
+{
+    "login": {
+        "confirm": "登录"
+    },
+    "header": {
+        "componentSize": "组件大小",
+        "language": "语言",
+        "default": "默认"
+    }
+}

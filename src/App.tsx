@@ -6,7 +6,6 @@ import Router from './routers/index'
 import { ConfigProvider } from "antd";
 import { useAppDispatch, useAppSelector } from "./redux/store";
 
-import i18n from 'i18next'
 import zhCN from 'antd/lib/locale/zh_CN'
 import enUS from 'antd/lib/locale/en_US'
 import { useEffect, useState } from "react";
@@ -14,7 +13,7 @@ import { getBrowserLanguage } from "./utils/util";
 import { setLanguage } from "./redux/modules/global";
 import { useTheme } from "./hooks/useTheme";
 
-import 'moment/dist/locale/zh-cn'
+import './i18n'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -33,7 +32,6 @@ function App() {
 
   useEffect(() => {
     // use global language
-    i18n.changeLanguage(language || getBrowserLanguage())
     dispatch(setLanguage(language || getBrowserLanguage()))
     // set antd language
     setAntdLanguage()

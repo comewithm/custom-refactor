@@ -40,7 +40,7 @@ const globalSlice = createSlice({
         setAssemblySize(state:GlobalState, {payload}: PayloadAction<GlobalAssemblySize>) {
             state.assemblySize = payload
         },
-        setLanguage(state:GlobalState, {payload}: PayloadAction<string>) {
+        setLanguage(state:GlobalState, {payload}: PayloadAction<GlobalState['language']>) {
             state.language = payload
         },
         setThemeConfig(state: GlobalState, {payload}: PayloadAction<Partial<ThemeConfigProps>>) {

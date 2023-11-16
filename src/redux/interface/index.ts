@@ -11,7 +11,7 @@ export interface GlobalState {
     tokenInfo: Login.LoginRes['tokenEntity']
     userInfo: {[key in string]?: any;}
     assemblySize: GlobalAssemblySize
-    language: string
+    language: 'zh' | 'en'
     themeConfig: ThemeConfigProps
 }
 

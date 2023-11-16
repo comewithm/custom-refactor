@@ -1,0 +1,10 @@
+{
+    "login": {
+        "confirm": "Login"
+    },
+    "header": {
+        "componentSize": "Component Size",
+        "language": "Language",
+        "default": "DEFAULT"
+    }
+}

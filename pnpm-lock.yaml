@@ -26,6 +26,9 @@ dependencies:
   i18next:
     specifier: ^23.7.6
     version: 23.7.6
+  i18next-resources-for-ts:
+    specifier: ^1.4.0
+    version: 1.4.0
   js-md5:
     specifier: ^0.8.3
     version: 0.8.3
@@ -1586,6 +1589,13 @@ packages:
     resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
     dependencies:
       void-elements: 3.1.0
+    dev: false
+
+  /i18next-resources-for-ts@1.4.0:
+    resolution: {integrity: sha512-NesjHO2/4/ogSl5JPD5r1YnfsJLop0J9CKfxCEuwSLNoJY3o7HhXSpnOMFI3HavlyWtKvX9u0XB8qnWBq684pQ==}
+    hasBin: true
+    dependencies:
+      '@babel/runtime': 7.23.2
     dev: false
 
   /i18next@23.7.6:

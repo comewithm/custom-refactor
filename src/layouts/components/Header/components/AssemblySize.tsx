@@ -2,11 +2,12 @@ import { GlobalAssemblySize } from "@/redux/interface"
 import { setAssemblySize } from "@/redux/modules/global"
 import { useAppDispatch, useAppSelector } from "@/redux/store"
 import { Dropdown, MenuProps } from "antd"
+import { useTranslation } from "react-i18next"
 
 
 export const AssemblySize = () => {
     const dispatch = useAppDispatch()
-
+    const {t} = useTranslation(['ns1'])
     const {assemblySize} = useAppSelector(state => state.global)
 
     const onClick = (e: MenuInfo) => {
@@ -17,7 +18,7 @@ export const AssemblySize = () => {
         {
             key: 'middle',
             disabled: assemblySize === 'middle',
-            label: <span>default</span>,
+            label: <span>{t('header.default', {ns: 'ns1'})}</span>,
             onClick
         },
         {
