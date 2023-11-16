@@ -1,7 +1,7 @@
 import { PlatformLayout } from "@/layouts";
 import { TRouteObject } from "../interface";
 import { Home } from "@/components/Home";
-
+import { TenantPage } from "@/pages/tenant";
 
 const homeRouter: TRouteObject[] = [
     {
@@ -9,7 +9,7 @@ const homeRouter: TRouteObject[] = [
         children: [
             {
                 path: "/home/index",
-                element: <Home />,
+                element: <TenantPage />,
                 meta: {
                     requiresAuth: true,
                     title: "home",
