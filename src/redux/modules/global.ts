@@ -27,7 +27,6 @@ const globalSlice = createSlice({
     reducers: {
         setToken(state:GlobalState, {payload}: PayloadAction<Login.LoginRes['tokenEntity']>) {
             state.tokenInfo = {
-                ...state.tokenInfo,
                 ...payload
             }
         },

@@ -5,6 +5,8 @@
     "header": {
         "componentSize": "组件大小",
         "language": "语言",
-        "default": "默认"
+        "default": "默认",
+        "large": "大型",
+        "small": "小型"
     }
 }

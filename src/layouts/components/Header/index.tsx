@@ -6,6 +6,8 @@ import { AssemblySize } from './components/AssemblySize'
 
 import './index.less'
 import { Language } from './components/Language'
+import { Theme } from './components/Theme'
+import { AvatarIcon } from './components/AvatarIcon'
 
 const {Header} = Layout
 
@@ -23,8 +25,10 @@ export const LayoutHeader = () => {
                 {/* language */}
                 <Language />
                 {/* theme */}
+                <Theme />
                 {/* full screen */}
                 {/* avatar */}
+                <AvatarIcon />
             </div>
         </Header>
     )

@@ -18,19 +18,19 @@ export const AssemblySize = () => {
         {
             key: 'middle',
             disabled: assemblySize === 'middle',
-            label: <span>{t('header.default', {ns: 'ns1'})}</span>,
+            label: <span>{t('header.default')}</span>,
             onClick
         },
         {
             key: 'large',
             disabled: assemblySize === 'large',
-            label: <span>large</span>,
+            label: <span>{t('header.large')}</span>,
             onClick
         },
         {
             key: 'small',
             disabled: assemblySize === 'small',
-            label: <span>small</span>,
+            label: <span>{t('header.small')}</span>,
             onClick
         }
     ]

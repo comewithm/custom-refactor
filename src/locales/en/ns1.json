@@ -5,6 +5,8 @@
     "header": {
         "componentSize": "Component Size",
         "language": "Language",
-        "default": "DEFAULT"
+        "default": "Default",
+        "large": "Large",
+        "small": "Small"
     }
 }

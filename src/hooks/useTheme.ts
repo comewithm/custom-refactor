@@ -6,6 +6,9 @@ export const useTheme = () => {
 
     const initTheme = () => {
         const body = document.documentElement as HTMLElement
+        if(weakOrGray === 'default') {
+            body.setAttribute("style", "")
+        }
         if(weakOrGray === 'weak') {
             body.setAttribute("style", "filter: invert(80%)")
         }
