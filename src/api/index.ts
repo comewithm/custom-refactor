@@ -2,10 +2,10 @@ import { message } from 'antd'
 import axios from 'axios'
 import type {AxiosInstance, AxiosRequestConfig, AxiosError, AxiosResponse} from 'axios'
 import { AxiosCanceler } from './helper/axiosCancel'
-import store from '@/redux/store'
 import { ResultEnum } from '@/constants'
 import { ApiResponse } from './interface'
 import { authorizeToken } from './helper/authorizeToken'
+import { checkStatus } from './helper/checkStatus'
 
 const axiosCanceler = new AxiosCanceler()
 
@@ -27,13 +27,13 @@ class RequestHttp {
          * token校验：接受服务器返回的token,存储到redux或者本地
          */
         this.service.interceptors.request.use(
-            (config: AxiosRequestConfig) => {
+            async (config: AxiosRequestConfig) => {
                 axiosCanceler.addPending(config)
                 // 登录接口不需要添加token响应头
                 // TODO: 请求时是否设置loading
                 // 抽离一个函数处理token问题 token失效时，
                 // 需要重新refreshToken接口获取新的token并重新执行相关的操作
-                config = authorizeToken(config)
+                await authorizeToken(config)
                 return config
             },
             (error: AxiosError) => {
@@ -75,8 +75,8 @@ class RequestHttp {
                 }
                 // 根据响应的错误状态码做不同的处理
                 if(response) {
-                    // TODO: 错误类型判断
-                    // checkStatus(response.status)
+                    // 错误类型判断
+                    checkStatus(response.status)
                 }
                 
                 return Promise.reject(error)

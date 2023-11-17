@@ -2,14 +2,17 @@ import { Login } from "@/api/interface";
 import { createSlice } from "@reduxjs/toolkit";
 import type {PayloadAction} from '@reduxjs/toolkit'
 import { GlobalAssemblySize, GlobalState, ThemeConfigProps } from "../interface";
+import { getLocalStorage } from "@/utils/storage";
+
+const tokenInfo = getLocalStorage()
 
 const globalState: GlobalState = {
     tokenInfo: {
         tokenId: '',
-        authorizationToken: '',
-        refreshToken: '',
-        refreshExpiresIn: -1,
-        expiresIn: -1
+        authorizationToken: tokenInfo.token,
+        refreshToken: tokenInfo.refreshToken,
+        refreshExpiresIn: tokenInfo.refreshExpires,
+        expiresIn: tokenInfo.tokenExpires
     },
     userInfo: {},
     assemblySize: 'middle',
