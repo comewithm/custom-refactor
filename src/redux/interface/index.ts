@@ -32,3 +32,7 @@ export interface BreadcrumbState {
         [key in string]: BreadcrumbItemProps['menu']
     }
 }
+
+export interface AuthState {
+    authRouter: string[]
+}

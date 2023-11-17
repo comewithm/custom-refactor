@@ -6,6 +6,8 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import { setMenuList as setReduxMenuList } from "@/redux/modules/menu" 
+import { setAuthRouter } from "@/redux/modules/auth"
+import { flattenRouterListPath } from "@/utils/router"
 
 /**
  * 1.获取menu list列表 最好做成配置
@@ -30,7 +32,9 @@ export const LayoutMenu = () => {
             const list = await getMenuList()
             setMenuList(switchListToMenuItemList(list))
             // TODO:面包屑导航栏存储
-            // TODO:存储路由菜单，做菜单权限判断
+            // 存储路由菜单，做菜单权限判断
+            dispatch(setAuthRouter(flattenRouterListPath(list)))
+            // 存储 menu list
             dispatch(setReduxMenuList(list))
         } finally {
             setLoading(false)
