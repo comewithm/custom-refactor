@@ -2,13 +2,11 @@ import store from "@/redux/store";
 import { AxiosRequestConfig } from "axios";
 import { fetchRefreshToken } from "../modules/login";
 import { setToken } from "@/redux/modules/global";
-import { GlobalState } from "@/redux/interface";
 import { getLocalStorage, setLocalStorage } from "@/utils/storage";
+import { isTokenExpired } from "@/utils/util";
 
 // token是否过期
-const isTokenExpired = (expires: number = Infinity) => {
-    return Date.now() > expires
-}
+
 
 // 校验token
 export const authorizeToken = async (config: AxiosRequestConfig) => {

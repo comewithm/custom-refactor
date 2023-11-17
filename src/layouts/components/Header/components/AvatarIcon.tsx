@@ -5,11 +5,16 @@ import { ExclamationCircleOutlined } from "@ant-design/icons"
 import { useAppDispatch } from "@/redux/store"
 import { useNavigate } from "react-router-dom"
 import { setToken } from "@/redux/modules/global"
+import { useLocalStorageState } from "ahooks"
+import { LOCAL_STORE_KEY } from "@/constants"
+import { GlobalState, LocalTokenInfo } from "@/redux/interface"
 
 export const AvatarIcon = () => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const [, setTokenInfo] = useLocalStorageState<LocalTokenInfo>(LOCAL_STORE_KEY.TOKEN_INFO)
 
     const loginOut = () => {
         Modal.confirm({
@@ -19,7 +24,8 @@ export const AvatarIcon = () => {
             okText: '确定',
             cancelText: '取消',
             onOk: () => {
-                dispatch(setToken({}))
+                dispatch(setToken({} as GlobalState['tokenInfo']))
+                setTokenInfo({} as LocalTokenInfo)
                 message.success('退出登录成功')
                 navigate('/login')
             }

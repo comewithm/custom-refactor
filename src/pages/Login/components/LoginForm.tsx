@@ -32,7 +32,7 @@ const LoginForm = () => {
                 loginForm.userPwd = encryption(publicKey, loginForm.userPwd)
                 const {success, data} = await fetchLoginIn({...loginForm, publicKey})
                 const {tokenEntity: {refreshToken, authorizationToken, expiresIn, refreshExpiresIn}} = data!
-                // TODO: 存储token => 本地 or redux???
+                // 存储token => 本地 or redux
                 dispatch(setToken(data?.tokenEntity!))
                 dispatch(setUserInfo(data?.currentLoginUser!))
                 setLocalTokenInfo({

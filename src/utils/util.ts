@@ -11,3 +11,7 @@ export const getBrowserLanguage = () => {
 
     return defaultLang
 }
+
+export const isTokenExpired = (expires: number = Infinity) => {
+    return Date.now() > expires
+}
