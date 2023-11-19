@@ -14,6 +14,7 @@ import { setLanguage } from "./redux/modules/global";
 import { useTheme } from "./hooks/useTheme";
 
 import './i18n'
+import { AuthRouter } from "./routers/utils/AuthRouter";
 
 function App() {
   const dispatch = useAppDispatch()
@@ -40,7 +41,9 @@ function App() {
   return (
     <HashRouter>
       <ConfigProvider locale={i18nLocale} componentSize={assemblySize}>
-        <Router /> 
+          <Router /> 
+        {/* <AuthRouter>
+        </AuthRouter> */}
       </ConfigProvider>
     </HashRouter>
   );

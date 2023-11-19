@@ -9,10 +9,10 @@ const tokenInfo = getLocalStorage()
 const globalState: GlobalState = {
     tokenInfo: {
         tokenId: '',
-        authorizationToken: tokenInfo.token,
-        refreshToken: tokenInfo.refreshToken,
-        refreshExpiresIn: tokenInfo.refreshExpires,
-        expiresIn: tokenInfo.tokenExpires
+        authorizationToken: tokenInfo?.token ?? '',
+        refreshToken: tokenInfo?.refreshToken ?? '',
+        refreshExpiresIn: tokenInfo?.refreshExpires ?? -1,
+        expiresIn: tokenInfo?.tokenExpires ?? -1
     },
     userInfo: {},
     assemblySize: 'middle',

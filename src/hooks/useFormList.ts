@@ -5,12 +5,12 @@ type noop = (...args: any[]) => any
 
 type noopPromise = (...args: any[]) => Promise<any>
 
-type GetReturnType<T extends noop> = T extends Promise<ApiResponse<infer R>> ? R : any
+type GetReturnType<T extends noopPromise> = T extends (...args:any[]) => Promise<ApiResponse<infer R>> ? R : unknown
 
 export const useTableList = <T extends any = any, F extends noopPromise = noopPromise>(params: T, request: F) => {
     // 分页接口数据请求
 
-    const [tableData, setTableData] = useState<GetReturnType<F>>()
+    const [tableData, setTableData] = useState({} as GetReturnType<F>)
     const [tableParams, setTableParams] = useState(params)
 
     const fetchData = async () => {

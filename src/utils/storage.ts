@@ -15,5 +15,5 @@ export const setLocalStorage = (info: LocalTokenInfo) => {
 
 export const getLocalStorage = () => {
     const str = localStorage.getItem(LOCAL_STORE_KEY.TOKEN_INFO)
-    return deserializer<LocalTokenInfo>(str || '')
+    return deserializer<LocalTokenInfo>(str || '{}')
 }

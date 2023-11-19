@@ -1,15 +1,9 @@
-import { Tenant } from "@/api/interface/home";
+import { Tenant, TenantInfo } from "@/api/interface/home";
 import { fetchTenantList } from "@/api/modules/home";
+import { TENANT_TYPE } from "@/constants/tenant";
 import { useTableList } from "@/hooks/useFormList";
-import { Table } from "antd"
+import { Table, Tooltip } from "antd"
 import type { ColumnsType } from 'antd/es/table';
-
-interface DataType {
-    key: React.Key;
-    name: string;
-    age: number;
-    address: string;
-}
 
 export const TenantPage = () => {
 
@@ -20,74 +14,36 @@ export const TenantPage = () => {
 
     console.log('tableData: ', tableData)
 
-    const columns: ColumnsType<DataType> = [
+    const columns: ColumnsType<TenantInfo[]> = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render: (text) => <a>{text}</a>,
-            width: 150,
+            key: 'tenantId',
+            title: '用户Id',
+            align: 'center',
+            render: ({tenantId}) => (
+                <Tooltip title={tenantId}>
+                    <span>{tenantId}</span>
+                </Tooltip>
+            )
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-            width: 80,
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address 1',
-            ellipsis: true,
-        },
-        {
-            title: 'Long Column Long Column Long Column',
-            dataIndex: 'address',
-            key: 'address 2',
-            ellipsis: true,
-        },
-        {
-            title: 'Long Column Long Column',
-            dataIndex: 'address',
-            key: 'address 3',
-            ellipsis: true,
-        },
-        {
-            title: 'Long Column',
-            dataIndex: 'address',
-            key: 'address 4',
-            ellipsis: true,
-        },
-    ];
-
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park, New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 2 Lake Park, London No. 2 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sydney No. 1 Lake Park, Sydney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
+            key: 'tenantName',
+            title: '用户名称',
+            align: 'center',
+            render: ({accountType, personName, enterpriseName}) => {
+                const tenantName = accountType === TENANT_TYPE.PERSON ? personName : enterpriseName
+                return (
+                    <Tooltip title={tenantName}>
+                        <span>{tenantName}</span>
+                    </Tooltip>
+                )
+            }
+        }
+    ]
 
     return (
         <Table
             columns={columns}
-            dataSource={data}
+            dataSource={tableData.list}
         />
     )
 }
