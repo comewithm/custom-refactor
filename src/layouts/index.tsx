@@ -4,6 +4,8 @@ import { LayoutMenu } from './components/Menu'
 import { LayoutHeader } from './components/Header'
 import { useAppSelector } from '@/redux/store'
 
+import './index.less'
+
 const {Sider, Content} = Layout
 
 export const PlatformLayout = () => {
@@ -11,17 +13,17 @@ export const PlatformLayout = () => {
   const {isCollapsed} = useAppSelector(state => state.menu)
 
   return (
-    <Layout>
-      <Sider trigger={null} collapsed={isCollapsed} width={220}>
+    <Layout className='container'>
+      {/* header */}
+      <LayoutHeader />
+      <Layout className='box-main'>
         {/* layout menu */}
-        <LayoutMenu />
-      </Sider>
-      <Layout>
-        {/* header */}
-        <LayoutHeader />
+        <Sider className='box-sider' trigger={null} collapsed={isCollapsed} width={220}>
+          <LayoutMenu />
+        </Sider>
         {/* layout tabs */}
         {/* layout content */}
-        <Content>
+        <Content className='box-content'>
           <Outlet />
         </Content>
       </Layout>

@@ -5,6 +5,8 @@ import { useTableList } from "@/hooks/useFormList";
 import { Button, Pagination, Table, Tooltip } from "antd"
 import type { ColumnsType } from 'antd/es/table';
 
+import './index.less'
+
 type GetKeys<T> = {
     [K in keyof T]: K
 }
@@ -113,21 +115,22 @@ export const TenantPage = () => {
     }
 
     return (
-        <>
+        <div className="tenant-container">
             <Table
                 rowKey={TENANT_PROPS.tenantId}
                 columns={columns}
                 dataSource={tableData.list}
+                scroll={{x: true, y: 570}}
                 pagination={false}
             />
 
-            <Pagination 
+            <Pagination
                 total={tableData.total}
                 showSizeChanger
                 showQuickJumper
                 showTotal={(total) => `Total ${total} items`}
                 onChange={onPageOrSizeChange}
             />
-        </>
+        </div>
     )
 }
