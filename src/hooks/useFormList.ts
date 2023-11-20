@@ -14,7 +14,7 @@ export const useTableList = <T extends any = any, F extends noopPromise = noopPr
     const [tableParams, setTableParams] = useState(params)
 
     const fetchData = async () => {
-        const {data} = await request(params)
+        const {data} = await request(tableParams)
 
         setTableData(data)
     }
@@ -25,6 +25,7 @@ export const useTableList = <T extends any = any, F extends noopPromise = noopPr
     return {
         tableParams,
         setTableParams,
-        tableData
+        tableData,
+        fetchData
     }
 }
