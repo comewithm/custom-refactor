@@ -6,6 +6,7 @@ import { Button, Pagination, Table, Tooltip } from "antd"
 import type { ColumnsType } from 'antd/es/table';
 
 import './index.less'
+import { SingleSearch } from "@/ui/Search/search";
 
 type GetKeys<T> = {
     [K in keyof T]: K
@@ -104,6 +105,9 @@ export const TenantPage = () => {
     ]
 
     // 页脚
+    const onShowTotal = (total: number) => {
+        return `Total ${total} items`
+    }
 
     // page | pageSize 回调
     const onPageOrSizeChange = (page: number, pageSize: number) => {
@@ -114,8 +118,21 @@ export const TenantPage = () => {
         })
     }
 
+    // search
+    const onSearchChange = (searchValue: string) => {
+        console.log('search value: ', searchValue)
+    }
+
+    const onSearch = (value: string, _e, info?: any) => {
+        console.log('search content: ', value, info?.source)
+    }
+
     return (
         <div className="tenant-container">
+            <SingleSearch 
+                onChange={onSearchChange}
+                onSearch={onSearch}
+            />
             <Table
                 rowKey={TENANT_PROPS.tenantId}
                 columns={columns}
@@ -128,7 +145,7 @@ export const TenantPage = () => {
                 total={tableData.total}
                 showSizeChanger
                 showQuickJumper
-                showTotal={(total) => `Total ${total} items`}
+                showTotal={(total) => onShowTotal(total)}
                 onChange={onPageOrSizeChange}
             />
         </div>
