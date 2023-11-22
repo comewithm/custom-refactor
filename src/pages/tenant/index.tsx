@@ -6,7 +6,11 @@ import { Button, Pagination, Table, Tooltip } from "antd"
 import type { ColumnsType } from 'antd/es/table';
 
 import './index.less'
-import { SingleSearch } from "@/ui/Search/search";
+import { UISingleSearch } from "@/ui/modules/Input";
+import { ChangeEvent } from "react";
+import { AdvancedSearch } from "@/business/Search/advancedSearch";
+import { getElements } from "@/ui/helper";
+import { FieldOptions } from "@/ui/interface";
 
 type GetKeys<T> = {
     [K in keyof T]: K
@@ -22,9 +26,39 @@ const TENANT_PROPS: GetKeys<TenantInfo> = {
     'notes': 'notes'
 }
 
+const optionList = [
+    { value: 1, label: '个人开发者' },
+    { value: 2, label: '企业用户' },
+]
+
+const fieldList: FieldOptions[] = [
+    {
+        type: 'input',
+        itemProps: {
+            name: 'custom_input',
+            label: 'INPUT',
+            rules: [{ required: true, message: 'input...' }]
+        },
+        elementProps: {
+            placeholder: 'please input your name...'
+        }
+    },
+    {
+        type: 'select',
+        itemProps: {
+            name: 'custom_select',
+            label: 'SELECT',
+            rules: [{ required: true, message: 'select...' }]
+        },
+        elementProps: {
+            options: optionList
+        }
+    },
+]
+
 export const TenantPage = () => {
 
-    const {tableData, tableParams, setTableParams} = useTableList<Partial<Tenant.ReqParams>, typeof fetchTenantList>({
+    const { tableData, tableParams, setTableParams } = useTableList<Partial<Tenant.ReqParams>, typeof fetchTenantList>({
         pageNo: 1,
         pageSize: 10
     }, fetchTenantList)
@@ -32,7 +66,7 @@ export const TenantPage = () => {
     console.log('tableData: ', tableData)
 
     // 操作
-    const operationContent = (tenant: TenantInfo):JSX.Element => {
+    const operationContent = (tenant: TenantInfo): JSX.Element => {
         return (
             <>
                 <Button>编辑1</Button>
@@ -47,7 +81,7 @@ export const TenantPage = () => {
             key: TENANT_PROPS.tenantId,
             title: '用户Id',
             align: 'center',
-            render: ({tenantId}: TenantInfo) => (
+            render: ({ tenantId }: TenantInfo) => (
                 <Tooltip title={tenantId}>
                     <span>{tenantId}</span>
                 </Tooltip>
@@ -57,7 +91,7 @@ export const TenantPage = () => {
             key: 'tenantName',
             title: '用户名称',
             align: 'center',
-            render: ({accountType, personName, enterpriseName}: TenantInfo) => {
+            render: ({ accountType, personName, enterpriseName }: TenantInfo) => {
                 const tenantName = accountType === TENANT_USER_TYPE.PERSON ? personName : enterpriseName
                 return (
                     <Tooltip title={tenantName}>
@@ -70,7 +104,7 @@ export const TenantPage = () => {
             key: 'accountType',
             title: '账号类型',
             align: 'center',
-            render: ({accountType}: TenantInfo) => {
+            render: ({ accountType }: TenantInfo) => {
                 const selectItem = TENANT_ACCOUNT_LABEL.find(item => item.TENANT_TYPE === accountType)
                 const displayName = selectItem?.TENANT_ACCOUNT ?? '--'
                 return (
@@ -84,7 +118,7 @@ export const TenantPage = () => {
             key: TENANT_PROPS.source,
             title: '来源',
             align: 'center',
-            render: ({source}: TenantInfo) => {
+            render: ({ source }: TenantInfo) => {
                 const selectedItem = TENANT_SOURCE.find(item => item.SOURCE_TYPE === source)
                 const displayName = selectedItem?.PLATFORM ?? '--'
                 return (
@@ -119,25 +153,45 @@ export const TenantPage = () => {
     }
 
     // search
-    const onSearchChange = (searchValue: string) => {
-        console.log('search value: ', searchValue)
+    const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
     }
 
     const onSearch = (value: string, _e, info?: any) => {
         console.log('search content: ', value, info?.source)
     }
 
+    const formSearch = (values: any) => {
+        console.log('search content: ', values)
+        setTableParams({
+
+        })
+    }
+
+    const formSearchReset = () => {
+        setTableParams({
+            ...tableParams,
+            pageNo: 1,
+            pageSize: 10
+        })
+    }
+
     return (
         <div className="tenant-container">
-            <SingleSearch 
+            <UISingleSearch
                 onChange={onSearchChange}
                 onSearch={onSearch}
+            />
+            <AdvancedSearch
+                onSearch={formSearch}
+                onReset={formSearchReset}
+                getFields={getElements(fieldList)}
             />
             <Table
                 rowKey={TENANT_PROPS.tenantId}
                 columns={columns}
                 dataSource={tableData.list}
-                scroll={{x: true, y: 570}}
+                scroll={{ x: true, y: 570 }}
                 pagination={false}
             />
 
