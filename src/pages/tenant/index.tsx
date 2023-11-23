@@ -6,11 +6,11 @@ import { Button, Pagination, Table, Tooltip } from "antd"
 import type { ColumnsType } from 'antd/es/table';
 
 import './index.less'
-import { UISingleSearch } from "@/ui/modules/Input";
 import { ChangeEvent } from "react";
-import { AdvancedSearch } from "@/business/Search/advancedSearch";
 import { getElements } from "@/ui/helper";
-import { FieldOptions } from "@/ui/interface";
+import { FormItemMixture } from "@/ui/interface";
+import { inputInfo, optionList, selectInfo } from "./Test";
+import { BSSearch } from "@/business/Search";
 
 type GetKeys<T> = {
     [K in keyof T]: K
@@ -26,38 +26,23 @@ const TENANT_PROPS: GetKeys<TenantInfo> = {
     'notes': 'notes'
 }
 
-const optionList = [
-    { value: 1, label: '个人开发者' },
-    { value: 2, label: '企业用户' },
-]
-
-const fieldList: FieldOptions[] = [
-    {
-        type: 'input',
-        itemProps: {
-            name: 'custom_input',
-            label: 'INPUT',
-            rules: [{ required: true, message: 'input...' }]
-        },
-        elementProps: {
-            placeholder: 'please input your name...'
-        }
-    },
+const fieldList: FormItemMixture[] = [
+    inputInfo,
+    selectInfo,
     {
         type: 'select',
         itemProps: {
-            name: 'custom_select',
+            name: 'custom_select2',
             label: 'SELECT',
             rules: [{ required: true, message: 'select...' }]
         },
         elementProps: {
             options: optionList
         }
-    },
+    } as FormItemMixture<'select'>
 ]
 
 export const TenantPage = () => {
-
     const { tableData, tableParams, setTableParams } = useTableList<Partial<Tenant.ReqParams>, typeof fetchTenantList>({
         pageNo: 1,
         pageSize: 10
@@ -152,22 +137,23 @@ export const TenantPage = () => {
         })
     }
 
-    // search
+    // single search input change
     const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
     }
 
+    // query the single search results
     const onSearch = (value: string, _e, info?: any) => {
         console.log('search content: ', value, info?.source)
     }
-
+    // query form search results
     const formSearch = (values: any) => {
         console.log('search content: ', values)
         setTableParams({
 
         })
     }
-
+    // form search reset
     const formSearchReset = () => {
         setTableParams({
             ...tableParams,
@@ -176,16 +162,25 @@ export const TenantPage = () => {
         })
     }
 
+    // 新增
+    const addNewItems = () => {
+
+    }
+
     return (
         <div className="tenant-container">
-            <UISingleSearch
-                onChange={onSearchChange}
-                onSearch={onSearch}
-            />
-            <AdvancedSearch
-                onSearch={formSearch}
-                onReset={formSearchReset}
-                getFields={getElements(fieldList)}
+            <BSSearch
+                addNewItems={addNewItems}
+                singleSearch={{
+                    onChange: onSearchChange,
+                    onSearch: onSearch,
+                    style: { width: 300 }
+                }}
+                advancedSearch={{
+                    onSearch: formSearch,
+                    onReset: formSearchReset,
+                    getFields: getElements(fieldList)
+                }}
             />
             <Table
                 rowKey={TENANT_PROPS.tenantId}
@@ -201,6 +196,7 @@ export const TenantPage = () => {
                 showQuickJumper
                 showTotal={(total) => onShowTotal(total)}
                 onChange={onPageOrSizeChange}
+                style={{ textAlign: 'center' }}
             />
         </div>
     )

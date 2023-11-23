@@ -18,7 +18,7 @@ export const PlatformLayout = () => {
       <LayoutHeader />
       <Layout className='box-main'>
         {/* layout menu */}
-        <Sider className='box-sider' trigger={null} collapsed={isCollapsed} width={220}>
+        <Sider className='box-sider' trigger={null} collapsed={isCollapsed} width={220} style={{textAlign: 'center'}}>
           <LayoutMenu />
         </Sider>
         {/* layout tabs */}

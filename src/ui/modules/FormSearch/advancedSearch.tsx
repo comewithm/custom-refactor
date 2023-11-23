@@ -1,6 +1,6 @@
 import { Button, Form, Row, Space } from "antd"
 
-interface AdvancedSearchProps {
+export interface AdvancedSearchProps {
     onSearch: (values:any) => void
     onReset?: () => void
     getFields: JSX.Element[]
