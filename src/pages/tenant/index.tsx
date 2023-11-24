@@ -34,7 +34,7 @@ export const TenantPage = () => {
             align: 'center',
             render: ({ tenantId }: TenantInfo) => (
                 <Tooltip title={tenantId}>
-                    <span>{tenantId}</span>
+                    <div>{tenantId}</div>
                 </Tooltip>
             )
         },
@@ -46,7 +46,7 @@ export const TenantPage = () => {
                 const tenantName = accountType === TENANT_USER_TYPE.PERSON ? personName : enterpriseName
                 return (
                     <Tooltip title={tenantName}>
-                        <span>{tenantName}</span>
+                        <div>{tenantName}</div>
                     </Tooltip>
                 )
             }
@@ -60,7 +60,7 @@ export const TenantPage = () => {
                 const displayName = selectItem?.label ?? '--'
                 return (
                     <Tooltip title={displayName}>
-                        <span>{displayName}</span>
+                        <div>{displayName}</div>
                     </Tooltip>
                 )
             }
@@ -74,7 +74,7 @@ export const TenantPage = () => {
                 const displayName = selectedItem?.label ?? '--'
                 return (
                     <Tooltip title={displayName}>
-                        <span>{displayName}</span>
+                        <div>{displayName}</div>
                     </Tooltip>
                 )
             }

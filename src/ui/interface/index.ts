@@ -1,5 +1,6 @@
 import { UIFormItemProps } from "../modules/FormItem"
 import { UIInputNumberProps, UIInputProps } from "../modules/Input"
+import { UIRadioProps } from "../modules/Radio"
 import { UIRangePickerProps } from "../modules/RangePicker"
 import { UISelectProps } from "../modules/Select"
 
@@ -8,6 +9,7 @@ export type FormItemPropsMap = {
     select: UISelectProps
     inputNumber: UIInputNumberProps
     rangePicker: UIRangePickerProps
+    radio: UIRadioProps
 }
 
 export type FormItemPropsObj = {

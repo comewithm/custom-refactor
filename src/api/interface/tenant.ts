@@ -180,7 +180,13 @@ export const TENANT_PROPS: SetSameKeyValues<TenantInfo> = {
     'userMobile': 'userMobile',
     'createTime': 'createTime',
     'updateTime': 'updateTime',
-    'notes': 'notes'
+    'notes': 'notes',
+
+    'personName': 'personName',
+    'enterpriseName': 'enterpriseName',
+    'businessType': 'businessType',
+    'userName': 'userName',
+    'userPwd': 'userPwd'
 }
 
 export const TENANT_SEARCH_IDS: SetSameKeyValues<TenantSearch> = {

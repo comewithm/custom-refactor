@@ -3,6 +3,7 @@ import { UISelect } from "../modules/Select"
 import { UIFormItem } from "../modules/FormItem"
 import { FormItemMixture } from "../interface"
 import { UIRangePicker } from "../modules/RangePicker"
+import { UIRadio } from "../modules/Radio"
 
 
 export const getElements = (field: FormItemMixture) => {
@@ -20,6 +21,9 @@ export const getElements = (field: FormItemMixture) => {
             break
         case 'rangePicker':
             currentElement = <UIRangePicker {...elementProps} />
+            break
+        case 'radio': 
+            currentElement = <UIRadio {...elementProps} />
             break
         default:
             currentElement = <></>
