@@ -1,4 +1,4 @@
-import { Tenant } from "../interface/home";
+import { Tenant } from "../interface/tenant";
 
 import http from '@/api'
 

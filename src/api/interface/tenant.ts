@@ -157,3 +157,38 @@ export interface TenantInfo {
     userPwd?: string;
     [property: string]: any;
 }
+
+
+export interface TenantSearch {
+    tenantIdSearch?: string
+    tenantNameSearch?: string
+    userMobileSearch?: string
+    accountTypeSearch?: number
+    createTimeSearch?: string
+    sourceSearch?: number
+    notesSearch?: string
+}
+
+type SetSameKeyValues<T> = {
+    [K in keyof T]: K
+}
+
+export const TENANT_PROPS: SetSameKeyValues<TenantInfo> = {
+    'tenantId': 'tenantId',
+    'accountType': 'accountType',
+    'source': 'source',
+    'userMobile': 'userMobile',
+    'createTime': 'createTime',
+    'updateTime': 'updateTime',
+    'notes': 'notes'
+}
+
+export const TENANT_SEARCH_IDS: SetSameKeyValues<TenantSearch> = {
+    'accountTypeSearch': 'accountTypeSearch',
+    'createTimeSearch': 'createTimeSearch',
+    'notesSearch': 'notesSearch',
+    'sourceSearch': 'sourceSearch',
+    'tenantIdSearch': 'tenantIdSearch',
+    'tenantNameSearch': 'tenantNameSearch',
+    'userMobileSearch': 'userMobileSearch'
+}

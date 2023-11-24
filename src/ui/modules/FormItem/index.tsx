@@ -1,4 +1,4 @@
-import { Form, FormItemProps } from "antd"
+import { Col, Form, FormItemProps } from "antd"
 
 export interface UIFormItemProps extends FormItemProps {
     wrapped?: boolean
@@ -6,19 +6,17 @@ export interface UIFormItemProps extends FormItemProps {
 }
 
 export const UIFormItem = (props: UIFormItemProps) => {
-    const {wrapped = true, wrappedElement, ...rest} = props
+    const { wrapped = true, wrappedElement, ...rest } = props
     return (
         <>
             {
                 wrapped
-                ?
-                <Form.Item
-                    {...rest}
-                >
-                    {wrappedElement}
-                </Form.Item>
-                :
-                wrappedElement
+                    ?
+                    <Form.Item {...rest}>
+                        {wrappedElement}
+                    </Form.Item>
+                    :
+                    wrappedElement
             }
         </>
     )

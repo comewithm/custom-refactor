@@ -14,27 +14,27 @@ export enum TENANT_PLATFORM_SOURCE {
 // 用户类型
 export const TENANT_ACCOUNT_LABEL = [
     {
-        TENANT_TYPE: TENANT_USER_TYPE.PERSON,
-        TENANT_ACCOUNT: '个人开发者'
+        value: TENANT_USER_TYPE.PERSON,
+        label: '个人开发者'
     },
     {
-        TENANT_TYPE: TENANT_USER_TYPE.ENTERPRISE,
-        TENANT_ACCOUNT: '企业开发者'
+        value: TENANT_USER_TYPE.ENTERPRISE,
+        label: '企业用户'
     }
 ]
 
 // 用户来源
 export const TENANT_SOURCE = [
     {
-        SOURCE_TYPE: TENANT_PLATFORM_SOURCE.STAR_RIVER,
-        PLATFORM: '星河'
+        value: TENANT_PLATFORM_SOURCE.STAR_RIVER,
+        label: '星河'
     },
     {
-        SOURCE_TYPE: TENANT_PLATFORM_SOURCE.INTELLIGENCE_SERVICE,
-        PLATFORM: '平台'
+        value: TENANT_PLATFORM_SOURCE.INTELLIGENCE_SERVICE,
+        label: '平台'
     },
     {
-        SOURCE_TYPE: TENANT_PLATFORM_SOURCE.MINI_PROGRAM,
-        PLATFORM: '小程序'
+        value: TENANT_PLATFORM_SOURCE.MINI_PROGRAM,
+        label: '小程序'
     },
 ]

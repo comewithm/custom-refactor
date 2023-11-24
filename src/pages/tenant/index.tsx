@@ -1,48 +1,19 @@
-import { Tenant, TenantInfo } from "@/api/interface/home";
-import { fetchTenantList } from "@/api/modules/home";
+import { TENANT_PROPS, TENANT_SEARCH_IDS, Tenant, TenantInfo, TenantSearch } from "@/api/interface/tenant";
+import { fetchTenantList } from "@/api/modules/tenant";
 import { TENANT_ACCOUNT_LABEL, TENANT_SOURCE, TENANT_USER_TYPE } from "@/constants/tenant";
 import { useTableList } from "@/hooks/useFormList";
-import { Button, Pagination, Table, Tooltip } from "antd"
+import { Button, Form, Pagination, Table, Tooltip } from "antd"
 import type { ColumnsType } from 'antd/es/table';
 
 import './index.less'
 import { ChangeEvent } from "react";
-import { getElements } from "@/ui/helper";
 import { FormItemMixture } from "@/ui/interface";
-import { inputInfo, optionList, selectInfo } from "./Test";
 import { BSSearch } from "@/business/Search";
 
-type GetKeys<T> = {
-    [K in keyof T]: K
-}
-
-const TENANT_PROPS: GetKeys<TenantInfo> = {
-    'tenantId': 'tenantId',
-    'accountType': 'accountType',
-    'source': 'source',
-    'userMobile': 'userMobile',
-    'createTime': 'createTime',
-    'updateTime': 'updateTime',
-    'notes': 'notes'
-}
-
-const fieldList: FormItemMixture[] = [
-    inputInfo,
-    selectInfo,
-    {
-        type: 'select',
-        itemProps: {
-            name: 'custom_select2',
-            label: 'SELECT',
-            rules: [{ required: true, message: 'select...' }]
-        },
-        elementProps: {
-            options: optionList
-        }
-    } as FormItemMixture<'select'>
-]
-
 export const TenantPage = () => {
+
+    const [form] = Form.useForm()
+
     const { tableData, tableParams, setTableParams } = useTableList<Partial<Tenant.ReqParams>, typeof fetchTenantList>({
         pageNo: 1,
         pageSize: 10
@@ -50,17 +21,12 @@ export const TenantPage = () => {
 
     console.log('tableData: ', tableData)
 
-    // 操作
-    const operationContent = (tenant: TenantInfo): JSX.Element => {
-        return (
-            <>
-                <Button>编辑1</Button>
-                <Button>编辑2</Button>
-                <Button>编辑3</Button>
-            </>
-        )
+    // 新增
+    const addNewItems = () => {
+
     }
 
+    // table 配置
     const columns: ColumnsType<TenantInfo[]> = [
         {
             key: TENANT_PROPS.tenantId,
@@ -86,12 +52,12 @@ export const TenantPage = () => {
             }
         },
         {
-            key: 'accountType',
+            key: TENANT_PROPS.accountType,
             title: '账号类型',
             align: 'center',
             render: ({ accountType }: TenantInfo) => {
-                const selectItem = TENANT_ACCOUNT_LABEL.find(item => item.TENANT_TYPE === accountType)
-                const displayName = selectItem?.TENANT_ACCOUNT ?? '--'
+                const selectItem = TENANT_ACCOUNT_LABEL.find(item => item.value === accountType)
+                const displayName = selectItem?.label ?? '--'
                 return (
                     <Tooltip title={displayName}>
                         <span>{displayName}</span>
@@ -104,8 +70,8 @@ export const TenantPage = () => {
             title: '来源',
             align: 'center',
             render: ({ source }: TenantInfo) => {
-                const selectedItem = TENANT_SOURCE.find(item => item.SOURCE_TYPE === source)
-                const displayName = selectedItem?.PLATFORM ?? '--'
+                const selectedItem = TENANT_SOURCE.find(item => item.value === source)
+                const displayName = selectedItem?.label ?? '--'
                 return (
                     <Tooltip title={displayName}>
                         <span>{displayName}</span>
@@ -123,11 +89,138 @@ export const TenantPage = () => {
         }
     ]
 
+    // search option list
+    const searchOptionList:FormItemMixture[] = [
+        {
+            type: 'input',
+            itemProps: {
+                name: TENANT_SEARCH_IDS.tenantIdSearch
+            },
+            elementProps: {
+                placeholder: '租户id'
+            }
+        } as FormItemMixture<'input'>,
+        {
+            type: 'input',
+            itemProps: {
+                name: TENANT_SEARCH_IDS.tenantNameSearch
+            },
+            elementProps: {
+                placeholder: '租户名称'
+            }
+        } as FormItemMixture<'input'>,
+        {
+            type: 'input',
+            itemProps: {
+                name: TENANT_SEARCH_IDS.userMobileSearch
+            },
+            elementProps: {
+                placeholder: '手机号'
+            }
+        } as FormItemMixture<'input'>,
+        {
+            type: 'select',
+            itemProps: {
+                name: TENANT_SEARCH_IDS.accountTypeSearch
+            },
+            elementProps: {
+                placeholder: '账号类型',
+                options: TENANT_ACCOUNT_LABEL
+            }
+        } as FormItemMixture<'select'>,
+        {
+            type: 'rangePicker',
+            itemProps: {
+                name: TENANT_SEARCH_IDS.createTimeSearch
+            },
+            elementProps: {
+                format: ['YYYY-MM-DD', 'YYYY-MM-DD'],
+                placeholder: ['开始时间', '结束时间']
+            }
+        } as FormItemMixture<'rangePicker'>,
+        {
+            type: 'select',
+            itemProps: {
+                name: TENANT_SEARCH_IDS.sourceSearch
+            },
+            elementProps: {
+                placeholder: '来源',
+                options: TENANT_SOURCE
+            }
+        } as FormItemMixture<'select'>,
+        {
+            type: 'input',
+            itemProps: {
+                name: TENANT_SEARCH_IDS.notesSearch
+            },
+            elementProps: {
+                placeholder: '备注'
+            }
+        } as FormItemMixture<'input'>
+    ]
+
+    // single search input change
+    const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+    }
+    // query the single search results
+    const onSearch = (value: string, _e, info?: any) => {
+        console.log('single search content: ', value, info?.source)
+        setTableParams({
+            ...tableParams,
+            pageNo: 1,
+            searchName: value.trim()
+        })
+    }
+    // query form search results
+    const formSearch = (values: TenantSearch) => {
+        console.log('search content: ', values)
+        const {
+            tenantIdSearch,
+            tenantNameSearch,
+            userMobileSearch,
+            accountTypeSearch,
+            sourceSearch,
+            createTimeSearch = [],
+            notesSearch
+        } = values
+        const [startTime, endTime] = createTimeSearch
+        setTableParams({
+            ...tableParams,
+            pageNo: 1,
+            tenantId: tenantIdSearch,
+            name: tenantNameSearch,
+            userMobile: userMobileSearch,
+            accountType: accountTypeSearch,
+            source: sourceSearch,
+            notes: notesSearch,
+            startTime: startTime ?? '',
+            endTime: endTime ?? ''
+        })
+    }
+    // form search reset
+    const formSearchReset = () => {
+        setTableParams({
+            pageNo: 1,
+            pageSize: 10
+        })
+    }
+
+    // 操作
+    const operationContent = (tenant: TenantInfo): JSX.Element => {
+        return (
+            <>
+                <Button>编辑1</Button>
+                <Button>编辑2</Button>
+                <Button>编辑3</Button>
+            </>
+        )
+    }
+
     // 页脚
     const onShowTotal = (total: number) => {
         return `Total ${total} items`
     }
-
     // page | pageSize 回调
     const onPageOrSizeChange = (page: number, pageSize: number) => {
         setTableParams({
@@ -137,49 +230,25 @@ export const TenantPage = () => {
         })
     }
 
-    // single search input change
-    const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value
-    }
-
-    // query the single search results
-    const onSearch = (value: string, _e, info?: any) => {
-        console.log('search content: ', value, info?.source)
-    }
-    // query form search results
-    const formSearch = (values: any) => {
-        console.log('search content: ', values)
-        setTableParams({
-
-        })
-    }
-    // form search reset
-    const formSearchReset = () => {
-        setTableParams({
-            ...tableParams,
-            pageNo: 1,
-            pageSize: 10
-        })
-    }
-
-    // 新增
-    const addNewItems = () => {
-
-    }
-
     return (
         <div className="tenant-container">
             <BSSearch
                 addNewItems={addNewItems}
                 singleSearch={{
+                    placeholder: '租户名称/手机号',
+                    allowClear: true,
                     onChange: onSearchChange,
                     onSearch: onSearch,
                     style: { width: 300 }
                 }}
                 advancedSearch={{
+                    form: form,
+                    formProps: {
+                        layout: 'horizontal'
+                    },
                     onSearch: formSearch,
                     onReset: formSearchReset,
-                    getFields: getElements(fieldList)
+                    getFields: searchOptionList
                 }}
             />
             <Table

@@ -1,4 +1,4 @@
-import { Input, InputProps } from "antd"
+import { Input, InputNumber, InputNumberProps, InputProps } from "antd"
 import { SearchProps } from "antd/es/input"
 
 const {Search} = Input
@@ -27,5 +27,15 @@ export const UISingleSearch = (props: UISingleSearchProps) => {
         <Search 
             {...rest}
         />
+    )
+}
+
+export interface UIInputNumberProps extends InputNumberProps {
+    
+}
+
+export const UIInputNumber = (props:UIInputNumberProps) => {
+    return (
+        <InputNumber {...props} />
     )
 }
