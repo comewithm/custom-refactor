@@ -2,13 +2,14 @@ import { TENANT_PROPS, TENANT_SEARCH_IDS, Tenant, TenantInfo, TenantSearch } fro
 import { fetchTenantList } from "@/api/modules/tenant";
 import { TENANT_ACCOUNT_LABEL, TENANT_SOURCE, TENANT_USER_TYPE } from "@/constants/tenant";
 import { useTableList } from "@/hooks/useFormList";
-import { Button, Form, Pagination, Table, Tooltip } from "antd"
+import { Button, Form, Pagination, Space, Table, Tooltip } from "antd"
 import type { ColumnsType } from 'antd/es/table';
 
 import './index.less'
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { FormItemMixture } from "@/ui/interface";
 import { BSSearch } from "@/business/Search";
+import { TenantModal } from "./tenantModal";
 
 export const TenantPage = () => {
 
@@ -21,9 +22,12 @@ export const TenantPage = () => {
 
     console.log('tableData: ', tableData)
 
+    const [visible, setVisible] = useState(false)
+    const [editInfo, setEditInfo] = useState<TenantInfo>({})
+
     // 新增
     const addNewItems = () => {
-
+        setVisible(true)
     }
 
     // table 配置
@@ -90,7 +94,7 @@ export const TenantPage = () => {
     ]
 
     // search option list
-    const searchOptionList:FormItemMixture[] = [
+    const searchOptionList: FormItemMixture[] = [
         {
             type: 'input',
             itemProps: {
@@ -210,11 +214,28 @@ export const TenantPage = () => {
     const operationContent = (tenant: TenantInfo): JSX.Element => {
         return (
             <>
-                <Button>编辑1</Button>
-                <Button>编辑2</Button>
-                <Button>编辑3</Button>
+                <Space>
+                    <Button type={'primary'} onClick={() => onEditModal(tenant)}>编辑</Button>
+                    <Button>编辑2</Button>
+                    <Button>编辑3</Button>
+                </Space>
             </>
         )
+    }
+
+    const onEditModal = (info: TenantInfo) => {
+        setEditInfo(info)
+        setVisible(true)
+    }
+
+    const onModalConfirm = () => {
+
+        // close modal
+        onModalCancel()
+    }
+
+    const onModalCancel = () => {
+        setVisible(false)
     }
 
     // 页脚
@@ -232,40 +253,52 @@ export const TenantPage = () => {
 
     return (
         <div className="tenant-container">
-            <BSSearch
-                addNewItems={addNewItems}
-                singleSearch={{
-                    placeholder: '租户名称/手机号',
-                    allowClear: true,
-                    onChange: onSearchChange,
-                    onSearch: onSearch,
-                    style: { width: 300 }
-                }}
-                advancedSearch={{
-                    form: form,
-                    formProps: {
-                        layout: 'horizontal'
-                    },
-                    onSearch: formSearch,
-                    onReset: formSearchReset,
-                    getFields: searchOptionList
-                }}
-            />
-            <Table
-                rowKey={TENANT_PROPS.tenantId}
-                columns={columns}
-                dataSource={tableData.list}
-                scroll={{ x: true, y: 570 }}
-                pagination={false}
-            />
+            <div>
+                <BSSearch
+                    addNewItems={addNewItems}
+                    singleSearch={{
+                        placeholder: '租户名称/手机号',
+                        allowClear: true,
+                        onChange: onSearchChange,
+                        onSearch: onSearch,
+                        style: { width: 300 }
+                    }}
+                    advancedSearch={{
+                        form: form,
+                        formProps: {
+                            layout: 'horizontal'
+                        },
+                        onSearch: formSearch,
+                        onReset: formSearchReset,
+                        getFields: searchOptionList
+                    }}
+                />
+                <Table
+                    rowKey={TENANT_PROPS.tenantId}
+                    columns={columns}
+                    dataSource={tableData.list}
+                    scroll={{ x: true, y: 570 }}
+                    pagination={false}
+                />
 
-            <Pagination
-                total={tableData.total}
-                showSizeChanger
-                showQuickJumper
-                showTotal={(total) => onShowTotal(total)}
-                onChange={onPageOrSizeChange}
-                style={{ textAlign: 'center' }}
+                <Pagination
+                    total={tableData.total}
+                    showSizeChanger
+                    showQuickJumper
+                    showTotal={(total) => onShowTotal(total)}
+                    onChange={onPageOrSizeChange}
+                    style={{ textAlign: 'center' }}
+                />
+            </div>
+
+            <TenantModal
+                visible={visible}
+                editModalInfo={editInfo}
+                onModalConfirm={onModalConfirm}
+                onModalCancel={onModalCancel}
+                formProps={{
+                    layout: 'horizontal'
+                }}
             />
         </div>
     )

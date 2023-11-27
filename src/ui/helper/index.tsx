@@ -1,4 +1,4 @@
-import { UIInput, UIInputNumber } from "../modules/Input"
+import { UIInput, UIInputNumber, UIInputPassword, UITextArea } from "../modules/Input"
 import { UISelect } from "../modules/Select"
 import { UIFormItem } from "../modules/FormItem"
 import { FormItemMixture } from "../interface"
@@ -18,6 +18,12 @@ export const getElements = (field: FormItemMixture) => {
             break
         case 'inputNumber':
             currentElement = <UIInputNumber {...elementProps} />
+            break
+        case 'inputPassword':
+            currentElement = <UIInputPassword {...elementProps} />
+            break
+        case 'textArea':
+            currentElement = <UITextArea {...elementProps} />
             break
         case 'rangePicker':
             currentElement = <UIRangePicker {...elementProps} />
