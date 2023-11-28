@@ -4,14 +4,14 @@ import { DownCircleTwoTone, UpCircleTwoTone } from "@ant-design/icons"
 import { Button, Tooltip } from "antd"
 
 import classnames from 'classnames'
-import { useState } from "react"
+import { ReactNode, useState } from "react"
 
 import './index.less'
 
 
 interface BSSearchProps {
     switchStatus?: boolean
-    addNewItems: () => void;
+    insertNodes: ReactNode;
     singleSearch: UISingleSearchProps
     advancedSearch: AdvancedSearchProps
 }
@@ -19,7 +19,7 @@ interface BSSearchProps {
 export const BSSearch = (props: BSSearchProps) => {
     const {
         switchStatus,
-        addNewItems,
+        insertNodes,
         singleSearch,
         advancedSearch
     } = props
@@ -47,7 +47,7 @@ export const BSSearch = (props: BSSearchProps) => {
                     </Tooltip>
                 </div>
                 <div className="right">
-                    <Button onClick={addNewItems} type={'primary'}>新增</Button>
+                    {insertNodes}
                 </div>
             </div>
             <div className={getAdvancedCls}>

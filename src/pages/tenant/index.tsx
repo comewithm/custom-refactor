@@ -10,6 +10,8 @@ import { ChangeEvent, useState } from "react";
 import { FormItemMixture } from "@/ui/interface";
 import { BSSearch } from "@/business/Search";
 import { TenantModal } from "./tenantModal";
+import { TableRowSelection } from "antd/es/table/interface";
+import { ColumnHeader, ExportToExcelButton } from "@/business/Excel";
 
 export const TenantPage = () => {
 
@@ -25,8 +27,11 @@ export const TenantPage = () => {
     const [visible, setVisible] = useState(false)
     const [editInfo, setEditInfo] = useState<TenantInfo>({})
 
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+    const [selectedData, setSelectedData] = useState<TenantInfo[]>([])
+    
     // table 配置
-    const columns: ColumnsType<TenantInfo[]> = [
+    const columns: ColumnsType<TenantInfo> = [
         {
             key: TENANT_PROPS.tenantId,
             title: '用户Id',
@@ -87,6 +92,17 @@ export const TenantPage = () => {
             }
         }
     ]
+
+    const onSelectChange = (selectedKeys: React.Key[]) => {
+        setSelectedRowKeys(selectedKeys)
+        const values = tableData.list.filter(item => selectedKeys.includes(item.tenantId as React.Key))
+        setSelectedData(values)
+    }
+    // row keys
+    const tableRowSelection: TableRowSelection<TenantInfo> = {
+        selectedRowKeys,
+        onChange: onSelectChange
+    }
 
     // search option list
     const searchOptionList: FormItemMixture[] = [
@@ -199,6 +215,7 @@ export const TenantPage = () => {
     }
     // form search reset
     const formSearchReset = () => {
+        setSelectedRowKeys([])
         setTableParams({
             pageNo: 1,
             pageSize: 10
@@ -240,6 +257,30 @@ export const TenantPage = () => {
         setVisible(false)
     }
 
+    const getExcelHeaders = () => {
+        return columns.map(col => {
+            if(col.key !== 'operation') {
+                return {
+                    key: col.key,
+                    title: col.title
+                } as ColumnHeader
+            }
+        }) as ColumnHeader[]
+    }
+    // 插入在Search中的按钮
+    const insertNodes = (
+        <Space>
+            {/* <Button onClick={exportToExcel} type={'dashed'}>导出</Button> */}
+            <ExportToExcelButton<TenantInfo>
+                data={selectedData}
+                fileName={'download'} 
+                // columns={['用户Id', '用户名称', '账号类型', '来源']}
+                columns={getExcelHeaders()}
+            />
+            <Button onClick={addNewItems} type={'primary'}>新增</Button>
+        </Space>
+    )
+
     // 页脚
     const onShowTotal = (total: number) => {
         return `Total ${total} items`
@@ -257,7 +298,7 @@ export const TenantPage = () => {
         <div className="tenant-container">
             <div>
                 <BSSearch
-                    addNewItems={addNewItems}
+                    insertNodes={insertNodes}
                     singleSearch={{
                         placeholder: '租户名称/手机号',
                         allowClear: true,
@@ -279,6 +320,7 @@ export const TenantPage = () => {
                     rowKey={TENANT_PROPS.tenantId}
                     columns={columns}
                     dataSource={tableData.list}
+                    rowSelection={tableRowSelection}
                     scroll={{ x: true, y: 570 }}
                     pagination={false}
                 />

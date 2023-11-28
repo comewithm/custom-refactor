@@ -42,7 +42,7 @@ export namespace Tenant {
         [property: string]: any;
     }
 
-    export type ResList = ResPage<TenantInfo[]>
+    export type ResList = ResPage<TenantInfo>
 }
 
 

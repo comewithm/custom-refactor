@@ -46,7 +46,7 @@ export interface ResPage<T> {
     hasPreviousPage?: boolean;
     isFirstPage?: boolean;
     isLastPage?: boolean;
-    list?: T[];
+    list: T[];
     navigateFirstPage?: number;
     navigateLastPage?: number;
     navigatepageNums?: number[];
