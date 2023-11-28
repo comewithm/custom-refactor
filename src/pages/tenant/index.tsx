@@ -25,11 +25,6 @@ export const TenantPage = () => {
     const [visible, setVisible] = useState(false)
     const [editInfo, setEditInfo] = useState<TenantInfo>({})
 
-    // 新增
-    const addNewItems = () => {
-        setVisible(true)
-    }
-
     // table 配置
     const columns: ColumnsType<TenantInfo[]> = [
         {
@@ -223,8 +218,15 @@ export const TenantPage = () => {
         )
     }
 
+    // edit
     const onEditModal = (info: TenantInfo) => {
         setEditInfo(info)
+        setVisible(true)
+    }
+
+    // add
+    const addNewItems = () => {
+        setEditInfo({})
         setVisible(true)
     }
 
@@ -296,9 +298,6 @@ export const TenantPage = () => {
                 editModalInfo={editInfo}
                 onModalConfirm={onModalConfirm}
                 onModalCancel={onModalCancel}
-                formProps={{
-                    layout: 'horizontal'
-                }}
             />
         </div>
     )
