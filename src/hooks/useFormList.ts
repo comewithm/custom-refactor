@@ -1,8 +1,6 @@
 import { ApiResponse } from "@/api/interface"
 import { useEffect, useState } from "react"
 
-type noop = (...args: any[]) => any
-
 type noopPromise = (...args: any[]) => Promise<any>
 
 type GetReturnType<T extends noopPromise> = T extends (...args:any[]) => Promise<ApiResponse<infer R>> ? R : unknown

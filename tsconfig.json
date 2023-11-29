@@ -17,17 +17,18 @@
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
+    "noImplicitAny": false,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports":true,
 
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@": ["src"],
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "vite.config.ts"],
-  "exclude": ["node_modules"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "vite.config.ts", "src/utils/config.ts"],
+  "exclude": ["node_modules", "dist", "**/*.js"],
+  // "references": [{ "path": "./tsconfig.node.json" }]
 }

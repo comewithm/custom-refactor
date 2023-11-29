@@ -6,6 +6,7 @@ import { ResultEnum } from '@/constants'
 import { ApiResponse } from './interface'
 import { authorizeToken } from './helper/authorizeToken'
 import { checkStatus } from './helper/checkStatus'
+import { CustomAxiosRequestConfig } from './interface/interceptor'
 
 const axiosCanceler = new AxiosCanceler()
 
@@ -27,7 +28,7 @@ class RequestHttp {
          * token校验：接受服务器返回的token,存储到redux或者本地
          */
         this.service.interceptors.request.use(
-            async (config: AxiosRequestConfig) => {
+            async (config: CustomAxiosRequestConfig) => {
                 axiosCanceler.addPending(config)
                 // 登录接口不需要添加token响应头
                 // TODO: 请求时是否设置loading

@@ -1,20 +1,19 @@
 import { PlatformLayout } from "@/layouts";
-import { TRouteObject } from "../interface";
-import { Home } from "@/components/Home";
 import { TenantPage } from "@/pages/tenant";
+import { RouteObject } from "react-router-dom";
 
-const homeRouter: TRouteObject[] = [
+const homeRouter: RouteObject[] = [
     {
         element: <PlatformLayout />,
         children: [
             {
                 path: "/home/index",
                 element: <TenantPage />,
-                meta: {
-                    requiresAuth: true,
-                    title: "home",
-                    key: 'home'
-                }
+                // meta: {
+                //     requiresAuth: true,
+                //     title: "home",
+                //     key: 'home'
+                // }
             }
         ]
     }

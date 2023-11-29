@@ -21,7 +21,7 @@ export const UICheckbox = (props: UICheckboxProps) => {
                                         value={item}
                                         disabled={value?.length === 1 && value[0] === item}
                                     >
-                                        {item}
+                                        {item as string | number}
                                     </Checkbox>
                                 </Col>
                             )

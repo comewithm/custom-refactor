@@ -1,6 +1,6 @@
 import {DatePicker, TimeRangePickerProps} from 'antd'
 
-const {RangePicker, TimePicker} = DatePicker
+const {RangePicker} = DatePicker
 
 export interface UIRangePickerProps extends TimeRangePickerProps {
 

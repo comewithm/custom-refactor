@@ -1,4 +1,4 @@
-import { Radio, RadioGroupProps, RadioProps } from "antd"
+import { Radio, RadioGroupProps } from "antd"
 
 // TODO: Radio
 export interface UIRadioProps extends RadioGroupProps {

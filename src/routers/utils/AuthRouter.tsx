@@ -12,6 +12,8 @@ export const AuthRouter = (props: {children: JSX.Element}) => {
     // 根据路径获取当前路由信息(是否有访问权限等)
     const route = findRouter(pathname, rootRouter)
 
+    console.log("route: ", route)
+
     // 是否有 token 或者 过期
     if(!token || isTokenExpired(tokenExpires)) {
         return <Navigate to={'/login'} replace />

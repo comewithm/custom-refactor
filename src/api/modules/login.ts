@@ -10,7 +10,7 @@ enum LoginUrl {
 }
 
 export const fetchPublicKey = () => {
-    return http.get<Login.ReqParams['publicKey']>(LoginUrl.PUBLIC_KEY, {}, {isToken: false})
+    return http.get<{publicKey:string}>(LoginUrl.PUBLIC_KEY, {}, {isToken: false})
 }
 
 export const fetchLoginIn = (params: Login.ReqParams) => {

@@ -1,15 +1,14 @@
 import store from "@/redux/store";
-import { AxiosRequestConfig } from "axios";
 import { fetchRefreshToken } from "../modules/login";
 import { setToken } from "@/redux/modules/global";
 import { getLocalStorage, setLocalStorage } from "@/utils/storage";
 import { isTokenExpired } from "@/utils/util";
+import { CustomAxiosHeaders, CustomAxiosRequestConfig } from "../interface/interceptor";
 
 // token是否过期
 
-
 // 校验token
-export const authorizeToken = async (config: AxiosRequestConfig) => {
+export const authorizeToken = async (config: CustomAxiosRequestConfig) => {
     const { isToken = true } = config
     const tokenInfo = getLocalStorage()
     let token = tokenInfo.token
@@ -25,7 +24,7 @@ export const authorizeToken = async (config: AxiosRequestConfig) => {
         config.headers = {
             ...config.headers,
             'X-Bm-Authorization': token
-        }
+        } as CustomAxiosHeaders
         console.log("need token");
     } else {
         console.log("not need token");

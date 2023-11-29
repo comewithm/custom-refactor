@@ -11,7 +11,7 @@ import { useTableList } from "@/hooks/useFormList";
 import { FormItemMixture } from "@/ui/interface";
 import { UICheckbox } from "@/ui/modules/Checkbox";
 import { BSSearch } from "@/business/Search";
-import { ColumnHeader, ExportByExcelJS, ExportToExcelButton } from "@/business/Excel";
+import { ColumnHeader, ExportByExcelJS } from "@/business/Excel";
 import { TenantModal } from "./tenantModal";
 import './index.less'
 

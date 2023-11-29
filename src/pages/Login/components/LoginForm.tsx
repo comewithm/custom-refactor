@@ -28,8 +28,8 @@ const LoginForm = () => {
         try {
             setLoading(true)
             if(true) {
-                const {data: {publicKey}} = await fetchPublicKey()
-                loginForm.userPwd = encryption(publicKey, loginForm.userPwd)
+                const {data: {publicKey} = {publicKey: ''}} = await fetchPublicKey()
+                loginForm.userPwd = encryption(publicKey!, loginForm.userPwd)
                 const {success, data} = await fetchLoginIn({...loginForm, publicKey})
                 const {tokenEntity: {refreshToken, authorizationToken, expiresIn, refreshExpiresIn}} = data!
                 // 存储token => 本地 or redux

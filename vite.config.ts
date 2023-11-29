@@ -1,10 +1,13 @@
-import { defineConfig } from "vite";
+import { ConfigEnv, defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
-// https://vitejs.dev/config/
-export default defineConfig(() => {
+import {wrapperEnv} from './src/utils/config'
 
+// https://vitejs.dev/config/
+export default defineConfig((mode: ConfigEnv) => {
+  const env = loadEnv(mode.mode, process.cwd())
+  const viteEnv = wrapperEnv(env)
   return {
     resolve: {
       alias: {
@@ -51,6 +54,23 @@ export default defineConfig(() => {
           target: 'http://172.16.0.51:8888',
           changeOrigin: true,
         },
+      }
+    },
+    esbuild: {
+      pure: viteEnv.VITE_DROP_CONSOLE ? ["console.log", "debugger"] : []
+    },
+    // build config
+    build: {
+      outDir: 'dist',
+      // esbuild打包更快，但不能去除console.log
+      minify: true,
+      rollupOptions: {
+        output: {
+          // Static resource classification and packaging
+					chunkFileNames: "assets/js/[name]-[hash].js",
+					entryFileNames: "assets/js/[name]-[hash].js",
+					assetFileNames: "assets/[ext]/[name]-[hash].[ext]"
+        }
       }
     }
   };

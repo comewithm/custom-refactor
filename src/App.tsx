@@ -14,7 +14,6 @@ import { setLanguage } from "./redux/modules/global";
 import { useTheme } from "./hooks/useTheme";
 
 import './i18n'
-import { AuthRouter } from "./routers/utils/AuthRouter";
 
 function App() {
   const dispatch = useAppDispatch()

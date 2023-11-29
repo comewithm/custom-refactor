@@ -1,7 +1,7 @@
 import { AdvancedSearch, AdvancedSearchProps } from "@/ui/modules/FormSearch/advancedSearch"
 import { UISingleSearch, UISingleSearchProps } from "@/ui/modules/Input"
 import { DownCircleTwoTone, UpCircleTwoTone } from "@ant-design/icons"
-import { Button, Tooltip } from "antd"
+import { Tooltip } from "antd"
 
 import classnames from 'classnames'
 import { ReactNode, useState } from "react"

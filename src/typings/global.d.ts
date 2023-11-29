@@ -12,6 +12,7 @@ declare namespace Menu {
 
 declare interface ViteEnv {
     VITE_API_URL: string
+    VITE_DROP_CONSOLE:boolean
 }
 
 declare interface MenuInfo {
