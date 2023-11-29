@@ -1,17 +1,25 @@
-import { TENANT_PROPS, TENANT_SEARCH_IDS, Tenant, TenantInfo, TenantSearch } from "@/api/interface/tenant";
+import { Button, Form, Pagination, Popover, Space, Table, Tooltip } from "antd"
+import { ChangeEvent, useState } from "react";
+import type { ColumnsType } from 'antd/es/table';
+import { TableRowSelection } from "antd/es/table/interface";
+import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { fetchTenantList } from "@/api/modules/tenant";
+import { TENANT_PROPS, TENANT_SEARCH_IDS, Tenant, TenantInfo, TenantSearch } from "@/api/interface/tenant";
 import { TENANT_ACCOUNT_LABEL, TENANT_SOURCE, TENANT_USER_TYPE } from "@/constants/tenant";
 import { useTableList } from "@/hooks/useFormList";
-import { Button, Form, Pagination, Space, Table, Tooltip } from "antd"
-import type { ColumnsType } from 'antd/es/table';
 
-import './index.less'
-import { ChangeEvent, useState } from "react";
 import { FormItemMixture } from "@/ui/interface";
+import { UICheckbox } from "@/ui/modules/Checkbox";
 import { BSSearch } from "@/business/Search";
+import { ColumnHeader, ExportByExcelJS, ExportToExcelButton } from "@/business/Excel";
 import { TenantModal } from "./tenantModal";
-import { TableRowSelection } from "antd/es/table/interface";
-import { ColumnHeader, ExportToExcelButton } from "@/business/Excel";
+import './index.less'
+
+/**
+ * 关于导出字段过滤，是否需要在Table中显示出相关字段
+ * 但对于不在checkList中的字段是否需要过滤掉(如用户名称tenantName，操作operation)
+ * 默认应该是显示操作operation的
+ */
 
 export const TenantPage = () => {
 
@@ -29,6 +37,14 @@ export const TenantPage = () => {
 
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
     const [selectedData, setSelectedData] = useState<TenantInfo[]>([])
+
+    const checkOptions = [
+        TENANT_PROPS.tenantId!,
+        'tenantName',
+        TENANT_PROPS.accountType!,
+        TENANT_PROPS.source!,
+    ]
+    const [checkList, setCheckList] = useState<CheckboxValueType[]>(checkOptions)
     
     // table 配置
     const columns: ColumnsType<TenantInfo> = [
@@ -92,6 +108,15 @@ export const TenantPage = () => {
             }
         }
     ]
+
+    const filterColumns = () => {
+        return columns.filter(c => {
+            if(c.key !== 'operation') {
+                return checkList.includes(c?.key as CheckboxValueType)
+            }
+            return true
+        })
+    }
 
     const onSelectChange = (selectedKeys: React.Key[]) => {
         setSelectedRowKeys(selectedKeys)
@@ -257,26 +282,28 @@ export const TenantPage = () => {
         setVisible(false)
     }
 
+    const checkListChange = (checkedValue: CheckboxValueType[]) => {
+        setCheckList(checkedValue)
+    }
+    // excel headers
     const getExcelHeaders = () => {
-        return columns.map(col => {
-            if(col.key !== 'operation') {
-                return {
-                    key: col.key,
-                    title: col.title
-                } as ColumnHeader
-            }
-        }) as ColumnHeader[]
+        // 需要一个key和title的映射
+        return checkList.map(c => {
+            return {
+                key: c,
+                title: `${c}_title`
+            } as ColumnHeader
+        })
+    }
+    const onExportSuccess = () => {
+        setSelectedRowKeys([])
+        setSelectedData([])
+        setCheckList(checkOptions)
+        console.log('export success')
     }
     // 插入在Search中的按钮
     const insertNodes = (
         <Space>
-            {/* <Button onClick={exportToExcel} type={'dashed'}>导出</Button> */}
-            <ExportToExcelButton<TenantInfo>
-                data={selectedData}
-                fileName={'download'} 
-                // columns={['用户Id', '用户名称', '账号类型', '来源']}
-                columns={getExcelHeaders()}
-            />
             <Button onClick={addNewItems} type={'primary'}>新增</Button>
         </Space>
     )
@@ -316,9 +343,36 @@ export const TenantPage = () => {
                         getFields: searchOptionList
                     }}
                 />
+                <div className="export-data">
+                    <Space>
+                        <ExportByExcelJS
+                            data={selectedData}
+                            fileName={'download'} 
+                            // columns={['用户Id', '用户名称', '账号类型', '来源']}
+                            columns={getExcelHeaders()}
+                            disabled={selectedData.length === 0}
+                            onSuccess={onExportSuccess}
+                        />
+                        <Popover
+                            className="check-popover"
+                            placement={'topLeft'}
+                            trigger={'click'}
+                            content={
+                                <UICheckbox 
+                                    value={checkList}
+                                    onChange={checkListChange}
+                                    options={checkOptions}
+                                />
+                            }
+                        >
+                            <Button type={'primary'}>筛选</Button>
+                        </Popover>
+                    </Space>
+                </div>
                 <Table
                     rowKey={TENANT_PROPS.tenantId}
-                    columns={columns}
+                    // columns={columns}
+                    columns={filterColumns()}
                     dataSource={tableData.list}
                     rowSelection={tableRowSelection}
                     scroll={{ x: true, y: 570 }}
